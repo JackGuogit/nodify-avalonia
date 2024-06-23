@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using Avalonia.Threading;
 
 namespace Nodify
 {
@@ -11,7 +12,7 @@ namespace Nodify
         /// <summary>
         /// Gets or sets the dispatcher to use to dispatch PropertyChanged events. Defaults to UI thread.
         /// </summary>
-        public virtual Action<Action> PropertyChangedDispatcher { get; set; } = Application.Current.Dispatcher.Invoke;
+        public virtual Action<Action> PropertyChangedDispatcher { get; set; } = Dispatcher.UIThread.Invoke;
 
         /// <summary>
         /// Occurs when a property value changes

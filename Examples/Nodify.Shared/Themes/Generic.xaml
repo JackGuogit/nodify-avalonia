@@ -234,11 +234,11 @@
         <!-- </Style.Triggers> -->
     </ControlTheme>
 
-    <Style TargetType="{x:Type local:Swatches}">
-        <Style.Resources>
+    <ControlTheme TargetType="{x:Type local:Swatches}" x:Key="{x:Type local:Swatches}">
+        <ControlTheme.Resources>
             <local:MultiValueEqualityConverter x:Key="MultiValueEqualityConverter" />
             <local:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
-        </Style.Resources>
+        </ControlTheme.Resources>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:Swatches">
@@ -257,26 +257,22 @@
                                     <Border CornerRadius="50"
                                             Padding="1"
                                             Margin="3">
-                                        <Border.Style>
-                                            <Style TargetType="{x:Type Border}">
+                                        <Border.Theme>
+                                            <ControlTheme TargetType="{x:Type Border}">
                                                 <Setter Property="Background"
                                                         Value="Transparent" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Value="True">
-                                                        <DataTrigger.Binding>
-                                                            <MultiBinding Converter="{StaticResource MultiValueEqualityConverter}">
-                                                                <Binding RelativeSource="{RelativeSource AncestorType=local:Swatches}"
-                                                                         Path="SelectedColor"
-                                                                         Mode="OneWay" />
-                                                                <Binding Mode="OneWay" />
-                                                            </MultiBinding>
-                                                        </DataTrigger.Binding>
-                                                        <Setter Property="Background"
-                                                                Value="White" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
+                                                <Setter Property="(Interaction.Behaviors)">
+                                                    <BehaviorCollectionTemplate>
+                                                        <BehaviorCollection>
+                                                            <DataTrigger Property="." Value="{Binding Path=SelectedColor, RelativeSource={RelativeSource AncestorType=local:Swatches}}">
+                                                                <PropertySetter Property="Background"
+                                                                    Value="White" />
+                                                            </DataTrigger>
+                                                        </BehaviorCollection>
+                                                    </BehaviorCollectionTemplate>
+                                                </Setter>
+                                            </ControlTheme>
+                                        </Border.Theme>
                                         <Ellipse Width="24"
                                                  Height="24"
                                                  Stroke="#1e293b"
@@ -290,5 +286,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>    
+    </ControlTheme>
 </ResourceDictionary>

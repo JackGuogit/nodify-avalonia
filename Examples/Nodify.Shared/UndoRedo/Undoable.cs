@@ -42,8 +42,11 @@ namespace Nodify.UndoRedo
 
         protected void RecordProperty<TType>(Expression<Func<TType, object?>> selector, PropertyFlags flags = PropertyFlags.Enable)
         {
-            string name = GetPropertyName(selector);
-            RecordProperty(name, flags);
+            if (RuntimeFeature.IsDynamicCodeSupported)
+            {
+                string name = GetPropertyName(selector);
+                RecordProperty(name, flags);
+            }
         }
 
         private static string GetPropertyName(Expression memberAccess)

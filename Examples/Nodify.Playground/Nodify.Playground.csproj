@@ -14,18 +14,19 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
-    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)"/>
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
-    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.1.0.4"/>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.1.0" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.1.0.4" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles SourceItemGroup="AvaloniaXaml" Include="**/*.xaml"/>
-    <AdditionalFiles SourceItemGroup="AvaloniaXaml" Include="Editor/*.xaml"/>
+    <AdditionalFiles SourceItemGroup="AvaloniaXaml" Include="**/*.xaml" />
+    <AdditionalFiles SourceItemGroup="AvaloniaXaml" Include="Editor/*.xaml" />
     <AvaloniaResource Include="**/*.xaml" />
   </ItemGroup>
 </Project>

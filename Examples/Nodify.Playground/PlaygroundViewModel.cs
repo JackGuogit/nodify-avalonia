@@ -46,8 +46,8 @@ namespace Nodify.Playground
 
         private async void GenerateRandomNodes()
         {
-            uint minNodesByType = Settings.MinNodes / 2;
-            uint maxNodesByType = Settings.MaxNodes / 2;
+            uint minNodesByType = Settings.MinNodes / 5;
+            uint maxNodesByType = Settings.MaxNodes / 20;
 
             var nodes = RandomNodesGenerator.GenerateNodes<FlowNodeViewModel>(new NodesGeneratorSettings(minNodesByType)
             {
@@ -73,7 +73,7 @@ namespace Nodify.Playground
 
             GraphViewModel.Nodes.Clear();
             await CopyToAsync(nodes, GraphViewModel.Nodes);
-            await CopyToAsync(verticalNodes, GraphViewModel.Nodes);
+            //await CopyToAsync(verticalNodes, GraphViewModel.Nodes);
 
             if (Settings.ShouldConnectNodes)
             {

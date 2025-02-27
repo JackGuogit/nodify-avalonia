@@ -16,6 +16,12 @@ class Program
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
+            // Windows
+            .With(new Win32PlatformOptions { OverlayPopups = true })
+            // Unix/Linux
+            .With(new X11PlatformOptions { OverlayPopups = true })
+            // Mac?
+            .With(new AvaloniaNativePlatformOptions { OverlayPopups = true })
             .WithInterFont()
             .LogToTrace();
 }

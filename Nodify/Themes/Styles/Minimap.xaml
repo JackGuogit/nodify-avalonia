@@ -1,77 +1,71 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Nodify">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Nodify">
 
     <local:SubtractConverter x:Key="SubtractConverter" />
 
-    <SolidColorBrush x:Key="MinimapBackground"
-                     Color="#121212"
-                     Opacity="0.7" />
-    <SolidColorBrush x:Key="MinimapItemBackground"
-                     Color="DodgerBlue"
-                     Opacity="0.8" />
+    <SolidColorBrush
+        x:Key="MinimapBackground"
+        Opacity="0.7"
+        Color="#121212" />
+    <SolidColorBrush
+        x:Key="MinimapItemBackground"
+        Opacity="0.8"
+        Color="DodgerBlue" />
 
-    <ControlTheme x:Key="ViewportRectStyle"
-           TargetType="Rectangle">
-        <Setter Property="Stroke"
-                Value="#74747c" />
-        <Setter Property="StrokeThickness"
-                Value="3" />
+    <ControlTheme x:Key="ViewportRectStyle" TargetType="Rectangle">
+        <Setter Property="Stroke" Value="#74747c" />
+        <Setter Property="StrokeThickness" Value="3" />
         <Setter Property="Fill">
             <Setter.Value>
-                <SolidColorBrush Color="#74747c"
-                                 Opacity="0.2" />
+                <SolidColorBrush Opacity="0.2" Color="#74747c" />
             </Setter.Value>
         </Setter>
     </ControlTheme>
 
-    <ControlTheme TargetType="{x:Type local:Minimap}" x:Key="{x:Type local:Minimap}">
-        <Setter Property="Padding"
-                Value="10" />
-        <Setter Property="Background"
-                Value="{StaticResource MinimapBackground}" />
-        <Setter Property="ViewportStyle"
-                Value="{StaticResource ViewportRectStyle}" />
+    <ControlTheme x:Key="{x:Type local:Minimap}" TargetType="{x:Type local:Minimap}">
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="Background" Value="{StaticResource MinimapBackground}" />
+        <Setter Property="ViewportStyle" Value="{StaticResource ViewportRectStyle}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Minimap}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            CornerRadius="3">
-                        <Viewbox Stretch="Uniform"
-                                 Margin="{TemplateBinding Padding}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="3">
+                        <Viewbox Margin="{TemplateBinding Padding}" Stretch="Uniform">
                             <Grid>
                                 <ItemsPresenter Name="PART_ItemsPresenter">
                                     <ItemsPresenter.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <local:MinimapPanel ViewportSize="{TemplateBinding ViewportSize}"
-                                                                ViewportLocation="{TemplateBinding ViewportLocation}"
-                                                                ResizeToViewport="{TemplateBinding ResizeToViewport}"
-                                                                Extent="{Binding Extent, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWayToSource}"
-                                                                ItemsExtent="{Binding ItemsExtent, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWayToSource}" />
+                                            <local:MinimapPanel
+                                                Extent="{Binding Extent, RelativeSource={RelativeSource AncestorType=local:Minimap}, Mode=OneWayToSource}"
+                                                ItemsExtent="{Binding ItemsExtent, RelativeSource={RelativeSource AncestorType=local:Minimap}, Mode=OneWayToSource}"
+                                                ResizeToViewport="{Binding ResizeToViewport, RelativeSource={RelativeSource AncestorType=local:Minimap}}"
+                                                ViewportLocation="{Binding ViewportLocation, RelativeSource={RelativeSource AncestorType=local:Minimap}}"
+                                                ViewportSize="{Binding ViewportSize, RelativeSource={RelativeSource AncestorType=local:Minimap}}" />
                                         </ItemsPanelTemplate>
                                     </ItemsPresenter.ItemsPanel>
                                 </ItemsPresenter>
 
                                 <Canvas>
-                                    <Rectangle  Theme="{TemplateBinding ViewportStyle}"
-                                                Width="{Binding ViewportSize.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                                                Height="{Binding ViewportSize.Height, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Rectangle
+                                        Width="{Binding ViewportSize.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Height="{Binding ViewportSize.Height, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Theme="{TemplateBinding ViewportStyle}">
                                         <Canvas.Top>
                                             <MultiBinding Converter="{StaticResource SubtractConverter}">
-                                                <Binding Path="ViewportLocation.Y"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Path="Extent.Position.Y"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Path="ViewportLocation.Y" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Path="Extent.Position.Y" RelativeSource="{RelativeSource TemplatedParent}" />
                                             </MultiBinding>
                                         </Canvas.Top>
                                         <Canvas.Left>
                                             <MultiBinding Converter="{StaticResource SubtractConverter}">
-                                                <Binding Path="ViewportLocation.X"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Path="Extent.Position.X"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Path="ViewportLocation.X" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Path="Extent.Position.X" RelativeSource="{RelativeSource TemplatedParent}" />
                                             </MultiBinding>
                                         </Canvas.Left>
                                     </Rectangle>
@@ -84,17 +78,17 @@
         </Setter>
     </ControlTheme>
 
-    <ControlTheme TargetType="{x:Type local:MinimapItem}" x:Key="{x:Type local:MinimapItem}">
-        <Setter Property="Background"
-                Value="{StaticResource MinimapItemBackground}" />
+    <ControlTheme x:Key="{x:Type local:MinimapItem}" TargetType="{x:Type local:MinimapItem}">
+        <Setter Property="Background" Value="{StaticResource MinimapItemBackground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MinimapItem}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            Padding="{TemplateBinding Padding}"
-                            CornerRadius="3">
+                    <Border
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="3">
                         <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                     </Border>
                 </ControlTemplate>

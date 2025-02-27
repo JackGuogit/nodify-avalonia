@@ -46,7 +46,7 @@
                             <ItemsPresenter Name="PART_ItemsPresenter">
                                 <ItemsPresenter.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <local:NodifyCanvas Extent="{Binding ItemsExtent, Mode=OneWayToSource, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <local:NodifyCanvas Extent="{Binding Extent, Mode=OneWayToSource, RelativeSource={RelativeSource AncestorType={x:Type local:NodifyEditor}}}" />
                                     </ItemsPanelTemplate>
                                 </ItemsPresenter.ItemsPanel>
                             </ItemsPresenter>

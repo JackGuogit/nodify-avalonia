@@ -3,7 +3,7 @@ namespace Nodify;
 public partial class NodifyEditor
 {
     private Point viewportLocation;
-
+    private Guid Id = Guid.NewGuid();
     private CancellationTokenSource? bringToViewToken;
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)

@@ -1,6 +1,7 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Nodify">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Nodify">
 
     <local:UnscaleTransformConverter x:Key="UnscaleTransformConverter" />
     <local:ScaleDoubleConverter x:Key="ScaleDoubleConverter" />
@@ -14,45 +15,33 @@
         <local:PendingConnection IsTabStop="False" />
     </DataTemplate>
 
-    <ControlTheme x:Key="SelectionRectangleStyle"
-           TargetType="Rectangle">
-        <Setter Property="Stroke"
-                Value="DodgerBlue" />
-        <Setter Property="StrokeThickness"
-                Value="1" />
+    <ControlTheme x:Key="SelectionRectangleStyle" TargetType="Rectangle">
+        <Setter Property="Stroke" Value="DodgerBlue" />
+        <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="Fill">
             <Setter.Value>
-                <SolidColorBrush Opacity="0.1"
-                                 Color="DodgerBlue" />
+                <SolidColorBrush Opacity="0.1" Color="DodgerBlue" />
             </Setter.Value>
         </Setter>
     </ControlTheme>
 
-    <ControlTheme TargetType="{x:Type local:NodifyEditor}" x:Key="{x:Type local:NodifyEditor}">
-        <Setter Property="ClipToBounds"
-                Value="True" />
-        <Setter Property="Foreground"
-                Value="White" />
-        <Setter Property="Background"
-                Value="#1E1E1E" />
-        <Setter Property="IsTabStop"
-                Value="False" />
-        <Setter Property="EnableRealtimeSelection"
-                Value="True" />
-        <Setter Property="DisplayConnectionsOnTop"
-                Value="False" />
-        <Setter Property="SelectionRectangleStyle"
-                Value="{StaticResource SelectionRectangleStyle}" />
-        <Setter Property="ConnectionTemplate"
-                Value="{StaticResource ConnectionTemplate}" />
-        <Setter Property="PendingConnectionTemplate"
-                Value="{StaticResource PendingConnectionTemplate}" />
+    <ControlTheme x:Key="{x:Type local:NodifyEditor}" TargetType="{x:Type local:NodifyEditor}">
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="#1E1E1E" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="EnableRealtimeSelection" Value="True" />
+        <Setter Property="DisplayConnectionsOnTop" Value="False" />
+        <Setter Property="SelectionRectangleStyle" Value="{StaticResource SelectionRectangleStyle}" />
+        <Setter Property="ConnectionTemplate" Value="{StaticResource ConnectionTemplate}" />
+        <Setter Property="PendingConnectionTemplate" Value="{StaticResource PendingConnectionTemplate}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:NodifyEditor}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <Canvas RenderTransform="{TemplateBinding ViewportTransform}" RenderTransformOrigin="0,0">
                             <ItemsPresenter Name="PART_ItemsPresenter">
                                 <ItemsPresenter.ItemsPanel>
@@ -62,74 +51,74 @@
                                 </ItemsPresenter.ItemsPanel>
                             </ItemsPresenter>
 
-                            <local:ConnectionsMultiSelector  x:Name="PART_ConnectionsHost"
-                                                             ItemsSource="{TemplateBinding Connections}"
-                                                             SelectedItem="{Binding SelectedConnection, RelativeSource={RelativeSource TemplatedParent}}"
-                                                             SelectedItems="{TemplateBinding SelectedConnections}"
-                                                             CanSelectMultipleItems="{TemplateBinding CanSelectMultipleConnections}"
-                                                             ItemTemplate="{TemplateBinding ConnectionTemplate}"
-                                                             ClipToBounds="False"
-                                                             IsTabStop="False">
+                            <local:ConnectionsMultiSelector
+                                x:Name="PART_ConnectionsHost"
+                                CanSelectMultipleItems="{TemplateBinding CanSelectMultipleConnections}"
+                                ClipToBounds="False"
+                                IsTabStop="False"
+                                ItemTemplate="{TemplateBinding ConnectionTemplate}"
+                                ItemsSource="{TemplateBinding Connections}"
+                                SelectedItem="{Binding SelectedConnection, RelativeSource={RelativeSource TemplatedParent}}"
+                                SelectedItems="{TemplateBinding SelectedConnections}">
                                 <local:ConnectionsMultiSelector.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Canvas />
                                     </ItemsPanelTemplate>
                                 </local:ConnectionsMultiSelector.ItemsPanel>
+
                             </local:ConnectionsMultiSelector>
 
-                            <ContentControl ClipToBounds="False" Content="{TemplateBinding PendingConnection}" ContentTemplate="{TemplateBinding PendingConnectionTemplate}" />
+                            <ContentControl
+                                ClipToBounds="False"
+                                Content="{TemplateBinding PendingConnection}"
+                                ContentTemplate="{TemplateBinding PendingConnectionTemplate}" />
 
-                            <Rectangle Theme="{TemplateBinding SelectionRectangleStyle}"
-                                       RenderTransform="{Binding ViewportTransform, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource UnscaleTransformConverter}}"
-                                       RenderTransformOrigin="0,0"
-                                       Canvas.Top="{Binding SelectedArea.Y, RelativeSource={RelativeSource TemplatedParent}}"
-                                       Canvas.Left="{Binding SelectedArea.X, RelativeSource={RelativeSource TemplatedParent}}"
-                                       IsVisible="{TemplateBinding IsSelecting}">
+                            <Rectangle
+                                Canvas.Left="{Binding SelectedArea.X, RelativeSource={RelativeSource TemplatedParent}}"
+                                Canvas.Top="{Binding SelectedArea.Y, RelativeSource={RelativeSource TemplatedParent}}"
+                                IsVisible="{TemplateBinding IsSelecting}"
+                                RenderTransform="{Binding ViewportTransform, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource UnscaleTransformConverter}}"
+                                RenderTransformOrigin="0,0"
+                                Theme="{TemplateBinding SelectionRectangleStyle}">
                                 <Rectangle.Width>
                                     <MultiBinding Converter="{StaticResource ScaleDoubleConverter}">
-                                        <Binding Path="SelectedArea.Width"
-                                                 RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Path="ViewportZoom"
-                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="SelectedArea.Width" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="ViewportZoom" RelativeSource="{RelativeSource TemplatedParent}" />
                                     </MultiBinding>
                                 </Rectangle.Width>
                                 <Rectangle.Height>
                                     <MultiBinding Converter="{StaticResource ScaleDoubleConverter}">
-                                        <Binding Path="SelectedArea.Height"
-                                                 RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Path="ViewportZoom"
-                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="SelectedArea.Height" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="ViewportZoom" RelativeSource="{RelativeSource TemplatedParent}" />
                                     </MultiBinding>
                                 </Rectangle.Height>
                             </Rectangle>
 
-                            <local:CuttingLine Theme="{TemplateBinding CuttingLineStyle}"
-                                               IsVisible="{TemplateBinding IsCutting}"
-                                               RenderTransformOrigin="0,0"
-                                               RenderTransform="{Binding ViewportTransform, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource UnscaleTransformConverter}}">
+                            <local:CuttingLine
+                                IsVisible="{TemplateBinding IsCutting}"
+                                RenderTransform="{Binding ViewportTransform, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource UnscaleTransformConverter}}"
+                                RenderTransformOrigin="0,0"
+                                Theme="{TemplateBinding CuttingLineStyle}">
                                 <local:CuttingLine.StartPoint>
                                     <MultiBinding Converter="{StaticResource ScalePointConverter}">
-                                        <Binding Path="CuttingLineStart"
-                                                 RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Path="ViewportZoom"
-                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="CuttingLineStart" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="ViewportZoom" RelativeSource="{RelativeSource TemplatedParent}" />
                                     </MultiBinding>
                                 </local:CuttingLine.StartPoint>
                                 <local:CuttingLine.EndPoint>
                                     <MultiBinding Converter="{StaticResource ScalePointConverter}">
-                                        <Binding Path="CuttingLineEnd"
-                                                 RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Path="ViewportZoom"
-                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="CuttingLineEnd" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="ViewportZoom" RelativeSource="{RelativeSource TemplatedParent}" />
                                     </MultiBinding>
                                 </local:CuttingLine.EndPoint>
                             </local:CuttingLine>
 
-                            <local:DecoratorsControl ItemsSource="{TemplateBinding Decorators}"
-                                                     ItemContainerTheme="{TemplateBinding DecoratorContainerStyle}"
-                                                     ItemTemplate="{TemplateBinding DecoratorTemplate}"
-                                                     IsTabStop="False"
-                                                     ClipToBounds="False">
+                            <local:DecoratorsControl
+                                ClipToBounds="False"
+                                IsTabStop="False"
+                                ItemContainerTheme="{TemplateBinding DecoratorContainerStyle}"
+                                ItemTemplate="{TemplateBinding DecoratorTemplate}"
+                                ItemsSource="{TemplateBinding Decorators}">
                                 <local:DecoratorsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <local:NodifyCanvas Extent="{Binding DecoratorsExtent, Mode=OneWayToSource, RelativeSource={RelativeSource AncestorType=local:NodifyEditor}}" />

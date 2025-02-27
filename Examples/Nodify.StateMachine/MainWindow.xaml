@@ -1,28 +1,27 @@
-﻿<Window x:Class="Nodify.StateMachine.MainWindow"
-        xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Nodify.StateMachine"
-        xmlns:shared="clr-namespace:Nodify;assembly=Nodify.Shared"
-        xmlns:nodify="https://miroiu.github.io/nodify"
-        xmlns:behaviours="clr-namespace:Nodify.Shared.Behaviours;assembly=Nodify.Shared"
-        xmlns:stateMachine="clr-namespace:Nodify.StateMachine;assembly=Nodify.Shared"
-        xmlns:compatibility="clr-namespace:Nodify.Compatibility;assembly=Nodify"
-        CanResize="True"
-        mc:Ignorable="d"
-        Title="State Machine Editor"
-        Height="500"
-        Width="930">
+﻿<Window
+    x:Class="Nodify.StateMachine.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviours="clr-namespace:Nodify.Shared.Behaviours;assembly=Nodify.Shared"
+    xmlns:compatibility="clr-namespace:Nodify.Compatibility;assembly=Nodify"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Nodify.StateMachine"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:nodify="https://miroiu.github.io/nodify"
+    xmlns:shared="clr-namespace:Nodify;assembly=Nodify.Shared"
+    xmlns:stateMachine="clr-namespace:Nodify.StateMachine;assembly=Nodify.Shared"
+    Title="State Machine Editor"
+    Width="930"
+    Height="500"
+    CanResize="True"
+    mc:Ignorable="d">
     <Window.DataContext>
         <local:StateMachineViewModel />
     </Window.DataContext>
 
     <Window.Resources>
-        <shared:BindingProxy x:Key="EditorProxy"
-                             DataContext="{Binding}" />
-        <shared:BindingProxy x:Key="BlackboardProxy"
-                             DataContext="{Binding Blackboard}" />
+        <shared:BindingProxy x:Key="EditorProxy" DataContext="{Binding}" />
+        <shared:BindingProxy x:Key="BlackboardProxy" DataContext="{Binding Blackboard}" />
         <local:ConnectorOffsetConverter x:Key="ConnectorOffsetConverter" />
     </Window.Resources>
 
@@ -30,48 +29,55 @@
         <Style Selector="MenuItem">
             <Setter Property="Icon">
                 <Template>
-                    <Rectangle Width="16" Height="16" Fill="{Binding $parent[MenuItem].Tag}" />
+                    <Rectangle
+                        Width="16"
+                        Height="16"
+                        Fill="{Binding $parent[MenuItem].Tag}" />
                 </Template>
             </Setter>
         </Style>
     </Window.Styles>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer x:Name="PART_ScrollViewer"
-                      HorizontalScrollBarVisibility="Auto"
-                      VerticalScrollBarVisibility="Auto"
-                      Grid.Column="1">
-            <nodify:NodifyEditor x:Name="Editor"
-                                 ItemsSource="{Binding States}"
-                                 SelectedItem="{Binding SelectedState}"
-                                 SelectedItems="{Binding SelectedStates}"
-                                 Connections="{Binding Transitions}"
-                                 PendingConnection="{Binding PendingTransition}"
-                                 DisconnectConnectorCommand="{Binding DisconnectStateCommand}"
-                                 ConnectionCompletedCommand="{Binding CreateTransitionCommand}"
-                                 RemoveConnectionCommand="{Binding DeleteTransitionCommand}"
-                                 Grid.Column="1">
+        <ScrollViewer
+            x:Name="PART_ScrollViewer"
+            Grid.Column="1"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto">
+            <nodify:NodifyEditor
+                x:Name="Editor"
+                Grid.Column="1"
+                ConnectionCompletedCommand="{Binding CreateTransitionCommand}"
+                Connections="{Binding Transitions}"
+                DisconnectConnectorCommand="{Binding DisconnectStateCommand}"
+                ItemsSource="{Binding States}"
+                PendingConnection="{Binding PendingTransition}"
+                RemoveConnectionCommand="{Binding DeleteTransitionCommand}"
+                SelectedItem="{Binding SelectedState}"
+                SelectedItems="{Binding SelectedStates}">
                 <nodify:NodifyEditor.PendingConnectionTemplate>
                     <DataTemplate DataType="{x:Type local:TransitionViewModel}">
-                        <nodify:PendingConnection Source="{Binding Source, Mode=OneWayToSource}"
-                                                  Target="{Binding Target, Mode=OneWayToSource}"
-                                                  StrokeDashArray="0"
-                                                  EnablePreview="True">
+                        <nodify:PendingConnection
+                            EnablePreview="True"
+                            Source="{Binding Source, Mode=OneWayToSource}"
+                            StrokeDashArray="0"
+                            Target="{Binding Target, Mode=OneWayToSource}">
                             <nodify:PendingConnection.Template>
                                 <ControlTemplate TargetType="{x:Type nodify:PendingConnection}">
-                                    <nodify:LineConnection Source="{TemplateBinding SourceAnchor}"
-                                                                  Target="{TemplateBinding TargetAnchor}"
-                                                                  StrokeThickness="{TemplateBinding StrokeThickness}"
-                                                                  StrokeDashArray="{TemplateBinding StrokeDashArray}"
-                                                                  SourceOffset="{Binding Source.Size, Converter={StaticResource ConnectorOffsetConverter}, ConverterParameter=5}"
-                                                                  Spacing="0"
-                                                                  SourceOffsetMode="Edge"
-                                                                  TargetOffsetMode="None" />
+                                    <nodify:LineConnection
+                                        Source="{TemplateBinding SourceAnchor}"
+                                        SourceOffset="{Binding Source.Size, Converter={StaticResource ConnectorOffsetConverter}, ConverterParameter=5}"
+                                        SourceOffsetMode="Edge"
+                                        Spacing="0"
+                                        StrokeDashArray="{TemplateBinding StrokeDashArray}"
+                                        StrokeThickness="{TemplateBinding StrokeThickness}"
+                                        Target="{TemplateBinding TargetAnchor}"
+                                        TargetOffsetMode="None" />
                                 </ControlTemplate>
                             </nodify:PendingConnection.Template>
                         </nodify:PendingConnection>
@@ -80,28 +86,24 @@
 
                 <nodify:NodifyEditor.ConnectionTemplate>
                     <DataTemplate DataType="{x:Type local:TransitionViewModel}">
-                        <nodify:LineConnection Source="{Binding Source.Anchor}"
-                                                      Target="{Binding Target.Anchor}"
-                                                      SourceOffset="{Binding Source.Size, Converter={StaticResource ConnectorOffsetConverter}, ConverterParameter=5}"
-                                                      TargetOffset="{Binding Target.Size, Converter={StaticResource ConnectorOffsetConverter}, ConverterParameter=5}"
-                                                      Spacing="0"
-                                                      SourceOffsetMode="Edge"
-                                                      TargetOffsetMode="Edge"
-                                                      Tag="{Binding}">
+                        <nodify:LineConnection
+                            Source="{Binding Source.Anchor}"
+                            SourceOffset="{Binding Source.Size, Converter={StaticResource ConnectorOffsetConverter}, ConverterParameter=5}"
+                            SourceOffsetMode="Edge"
+                            Spacing="0"
+                            Tag="{Binding}"
+                            Target="{Binding Target.Anchor}"
+                            TargetOffset="{Binding Target.Size, Converter={StaticResource ConnectorOffsetConverter}, ConverterParameter=5}"
+                            TargetOffsetMode="Edge">
                             <nodify:LineConnection.Theme>
-                                <ControlTheme TargetType="{x:Type nodify:LineConnection}"
-                                       BasedOn="{StaticResource {x:Type nodify:LineConnection}}">
-                                    <Setter Property="StrokeThickness"
-                                            Value="3" />
+                                <ControlTheme BasedOn="{StaticResource {x:Type nodify:LineConnection}}" TargetType="{x:Type nodify:LineConnection}">
+                                    <Setter Property="StrokeThickness" Value="3" />
                                     <Setter Property="(Interaction.Behaviors)">
                                         <BehaviorCollectionTemplate>
                                             <BehaviorCollection>
-                                                <DataTrigger Property="IsActive"
-                                                                        Value="True">
-                                                    <PropertySetter Property="Stroke"
-                                                                    Value="{DynamicResource ActiveStateBrush}" />
-                                                    <PropertySetter Property="StrokeThickness"
-                                                                    Value="6" />
+                                                <DataTrigger Property="IsActive" Value="True">
+                                                    <PropertySetter Property="Stroke" Value="{DynamicResource ActiveStateBrush}" />
+                                                    <PropertySetter Property="StrokeThickness" Value="6" />
                                                 </DataTrigger>
                                             </BehaviorCollection>
                                         </BehaviorCollectionTemplate>
@@ -110,10 +112,11 @@
                             </nodify:LineConnection.Theme>
                             <nodify:LineConnection.ContextMenu>
                                 <ContextMenu DataContext="{Binding DataContext, Source={StaticResource EditorProxy}}">
-                                    <MenuItem Header="_Delete"
-                                              Icon="{StaticResource DeleteIcon}"
-                                              Command="{Binding DeleteTransitionCommand}"
-                                              CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}" />
+                                    <MenuItem
+                                        Command="{Binding DeleteTransitionCommand}"
+                                        CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"
+                                        Header="_Delete"
+                                        Icon="{StaticResource DeleteIcon}" />
                                 </ContextMenu>
                             </nodify:LineConnection.ContextMenu>
                         </nodify:LineConnection>
@@ -122,33 +125,30 @@
 
                 <nodify:NodifyEditor.ItemTemplate>
                     <DataTemplate DataType="{x:Type local:StateViewModel}">
-                        <!--If IsConnected is false, Anchor won't be updated-->
-                        <nodify:StateNode Content="{Binding}"
-                                          IsConnected="True"
-                                          Anchor="{Binding Anchor, Mode=OneWayToSource}">
+                        <!--  If IsConnected is false, Anchor won't be updated  -->
+                        <nodify:StateNode
+                            Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                            Content="{Binding}"
+                            IsConnected="True">
                             <nodify:StateNode.ContentTemplate>
                                 <DataTemplate DataType="{x:Type local:StateViewModel}">
-                                    <shared:EditableTextBlock Text="{Binding Name}"
-                                                              IsEditing="{Binding IsRenaming}"
-                                                              IsEditable="{Binding IsEditable}"
-                                                              MaxLength="30" />
+                                    <shared:EditableTextBlock
+                                        IsEditable="{Binding IsEditable}"
+                                        IsEditing="{Binding IsRenaming}"
+                                        MaxLength="30"
+                                        Text="{Binding Name}" />
                                 </DataTemplate>
                             </nodify:StateNode.ContentTemplate>
                             <nodify:StateNode.Theme>
-                                <ControlTheme TargetType="{x:Type nodify:StateNode}"
-                                       BasedOn="{StaticResource {x:Type nodify:StateNode}}">
+                                <ControlTheme BasedOn="{StaticResource {x:Type nodify:StateNode}}" TargetType="{x:Type nodify:StateNode}">
                                     <Setter Property="(Interaction.Behaviors)">
                                         <BehaviorCollectionTemplate>
                                             <BehaviorCollection>
-                                                <DataTrigger Property="IsEditable"
-                                                             Value="False">
-                                                    <PropertySetter Property="BorderBrush"
-                                                                    Value="{DynamicResource ReadOnlyStateBrush}" />
+                                                <DataTrigger Property="IsEditable" Value="False">
+                                                    <PropertySetter Property="BorderBrush" Value="{DynamicResource ReadOnlyStateBrush}" />
                                                 </DataTrigger>
-                                                <DataTrigger Property="IsActive"
-                                                             Value="True">
-                                                    <PropertySetter Property="BorderBrush"
-                                                                    Value="{DynamicResource ActiveStateBrush}" />
+                                                <DataTrigger Property="IsActive" Value="True">
+                                                    <PropertySetter Property="BorderBrush" Value="{DynamicResource ActiveStateBrush}" />
                                                 </DataTrigger>
                                             </BehaviorCollection>
                                         </BehaviorCollectionTemplate>
@@ -160,52 +160,56 @@
                 </nodify:NodifyEditor.ItemTemplate>
 
                 <nodify:NodifyEditor.ItemContainerTheme>
-                    <ControlTheme TargetType="{x:Type nodify:ItemContainer}"
-                           BasedOn="{StaticResource {x:Type nodify:ItemContainer}}">
-                        <Setter Property="BorderBrush"
-                                Value="Transparent" />
-                        <Setter Property="Location"
-                                Value="{Binding Location}" />
-                        <Setter Property="ActualSize"
-                                Value="{Binding Size, Mode=OneWayToSource}" />
+                    <ControlTheme BasedOn="{StaticResource {x:Type nodify:ItemContainer}}" TargetType="{x:Type nodify:ItemContainer}">
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="Location" Value="{Binding Location}" />
+                        <Setter Property="ActualSize" Value="{Binding Size, Mode=OneWayToSource}" />
                         <Setter Property="ContextMenu">
                             <Setter.Value>
                                 <ContextMenu DataContext="{Binding DataContext, Source={StaticResource EditorProxy}}">
-                                    <MenuItem Header="_Delete"
-                                              Tag="{StaticResource DeleteIcon}"
-                                              Command="{Binding DeleteSelectionCommand}" />
-                                    <MenuItem Header="Di_sconnect"
-                                              Tag="{StaticResource DisconnectIcon}"
-                                              Command="{Binding DisconnectSelectionCommand}" />
-                                    <MenuItem Header="_Rename"
-                                              Tag="{StaticResource RenameIcon}"
-                                              Command="{Binding RenameStateCommand}" />
-                                    <MenuItem Header="_Alignment"
-                                              Tag="{StaticResource AlignTopIcon}">
-                                        <MenuItem Header="_Top"
-                                                  Tag="{StaticResource AlignTopIcon}"
-                                                  Command="{x:Static nodify:EditorCommands.Align}"
-                                                  CommandParameter="Top" />
-                                        <MenuItem Header="_Left"
-                                                  Tag="{StaticResource AlignLeftIcon}"
-                                                  Command="{x:Static nodify:EditorCommands.Align}"
-                                                  CommandParameter="Left" />
-                                        <MenuItem Header="_Bottom"
-                                                  Tag="{StaticResource AlignBottomIcon}"
-                                                  Command="{x:Static nodify:EditorCommands.Align}"
-                                                  CommandParameter="Bottom" />
-                                        <MenuItem Header="_Right"
-                                                  Tag="{StaticResource AlignRightIcon}"
-                                                  Command="{x:Static nodify:EditorCommands.Align}"
-                                                  CommandParameter="Right" />
-                                        <MenuItem Header="_Middle"
-                                                  Tag="{StaticResource AlignMiddleIcon}"
-                                                  Command="{x:Static nodify:EditorCommands.Align}"
-                                                  CommandParameter="Middle" />
-                                        <MenuItem Header="_Center"
-                                                  Tag="{StaticResource AlignCenterIcon}"
-                                                  Command="{x:Static nodify:EditorCommands.Align}"
-                                                  CommandParameter="Center" />
+                                    <MenuItem
+                                        Command="{Binding DeleteSelectionCommand}"
+                                        Header="_Delete"
+                                        Tag="{StaticResource DeleteIcon}" />
+                                    <MenuItem
+                                        Command="{Binding DisconnectSelectionCommand}"
+                                        Header="Di_sconnect"
+                                        Tag="{StaticResource DisconnectIcon}" />
+                                    <MenuItem
+                                        Command="{Binding RenameStateCommand}"
+                                        Header="_Rename"
+                                        Tag="{StaticResource RenameIcon}" />
+                                    <MenuItem Header="_Alignment" Tag="{StaticResource AlignTopIcon}">
+                                        <MenuItem
+                                            Command="{x:Static nodify:EditorCommands.Align}"
+                                            CommandParameter="Top"
+                                            Header="_Top"
+                                            Tag="{StaticResource AlignTopIcon}" />
+                                        <MenuItem
+                                            Command="{x:Static nodify:EditorCommands.Align}"
+                                            CommandParameter="Left"
+                                            Header="_Left"
+                                            Tag="{StaticResource AlignLeftIcon}" />
+                                        <MenuItem
+                                            Command="{x:Static nodify:EditorCommands.Align}"
+                                            CommandParameter="Bottom"
+                                            Header="_Bottom"
+                                            Tag="{StaticResource AlignBottomIcon}" />
+                                        <MenuItem
+                                            Command="{x:Static nodify:EditorCommands.Align}"
+                                            CommandParameter="Right"
+                                            Header="_Right"
+                                            Tag="{StaticResource AlignRightIcon}" />
+                                        <MenuItem
+                                            Command="{x:Static nodify:EditorCommands.Align}"
+                                            CommandParameter="Middle"
+                                            Header="_Middle"
+                                            Tag="{StaticResource AlignMiddleIcon}" />
+                                        <MenuItem
+                                            Command="{x:Static nodify:EditorCommands.Align}"
+                                            CommandParameter="Center"
+                                            Header="_Center"
+                                            Tag="{StaticResource AlignCenterIcon}" />
                                     </MenuItem>
                                 </ContextMenu>
                             </Setter.Value>
@@ -215,64 +219,60 @@
 
                 <nodify:NodifyEditor.ContextMenu>
                     <ContextMenu DataContext="{Binding DataContext, Source={StaticResource EditorProxy}}">
-                        <MenuItem Header="_Add State"
-                                  Tag="{StaticResource AddStateIcon}"
-                                  InputGesture="Shift+A"
-                                  Command="{Binding AddStateCommand}"
-                                  CommandParameter="{Binding #Editor.MouseLocation}" />
-                        <MenuItem Header="_Delete"
-                                  Tag="{StaticResource DeleteIcon}"
-                                  InputGesture="Delete"
-                                  Command="{Binding DeleteSelectionCommand}" />
+                        <MenuItem
+                            Command="{Binding AddStateCommand}"
+                            CommandParameter="{Binding #Editor.MouseLocation}"
+                            Header="_Add State"
+                            InputGesture="Shift+A"
+                            Tag="{StaticResource AddStateIcon}" />
+                        <MenuItem
+                            Command="{Binding DeleteSelectionCommand}"
+                            Header="_Delete"
+                            InputGesture="Delete"
+                            Tag="{StaticResource DeleteIcon}" />
                         <Separator Background="{DynamicResource BorderBrush}" />
-                        <MenuItem Header="_Select All"
-                                  Tag="{StaticResource SelectAllIcon}"
-                                  InputGesture="Ctrl+A"
-                                  Command="{x:Static nodify:EditorCommands.SelectAll}" />
+                        <MenuItem
+                            Command="{x:Static nodify:EditorCommands.SelectAll}"
+                            Header="_Select All"
+                            InputGesture="Ctrl+A"
+                            Tag="{StaticResource SelectAllIcon}" />
                     </ContextMenu>
                 </nodify:NodifyEditor.ContextMenu>
 
                 <nodify:NodifyEditor.KeyBindings>
-                    <KeyBinding Gesture="Delete"
-                                Command="{Binding DeleteSelectionCommand}" />
-                    <KeyBinding Gesture="Shift+A"
-                                Command="{Binding AddStateCommand}"
-                                CommandParameter="{Binding MouseLocation, RelativeSource={RelativeSource AncestorType={x:Type nodify:NodifyEditor}}}" />
+                    <KeyBinding Command="{Binding DeleteSelectionCommand}" Gesture="Delete" />
+                    <KeyBinding
+                        Command="{Binding AddStateCommand}"
+                        CommandParameter="{Binding MouseLocation, RelativeSource={RelativeSource AncestorType={x:Type nodify:NodifyEditor}}}"
+                        Gesture="Shift+A" />
                 </nodify:NodifyEditor.KeyBindings>
             </nodify:NodifyEditor>
         </ScrollViewer>
 
-        <!--TOOLBAR-->
-        <Border CornerRadius="2"
-                Background="{DynamicResource PanelBackgroundBrush}"
-                BorderThickness="0 0 0 1"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Margin="10 0"
-                Grid.Column="1">
+        <!--  TOOLBAR  -->
+        <Border
+            Grid.Column="1"
+            Margin="10,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Background="{DynamicResource PanelBackgroundBrush}"
+            BorderThickness="0,0,0,1"
+            CornerRadius="2">
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding PauseCommand}">
                     <Button.Theme>
-                        <ControlTheme TargetType="{x:Type Button}"
-                               BasedOn="{StaticResource IconButton}">
-                            <Setter Property="Content"
-                                    Value="{StaticResource PauseIcon}" />
-                            <Setter Property="(ToolTip.Tip)"
-                                    Value="Pause" />
+                        <ControlTheme BasedOn="{StaticResource IconButton}" TargetType="{x:Type Button}">
+                            <Setter Property="Content" Value="{StaticResource PauseIcon}" />
+                            <Setter Property="(ToolTip.Tip)" Value="Pause" />
                             <Setter Property="(Interaction.Behaviors)">
                                 <BehaviorCollectionTemplate>
                                     <BehaviorCollection>
-                                        <DataTrigger Property="Runner.State"
-                                                     Value="Stopped">
-                                            <PropertySetter Property="IsVisible"
-                                                            Value="False" />
+                                        <DataTrigger Property="Runner.State" Value="Stopped">
+                                            <PropertySetter Property="IsVisible" Value="False" />
                                         </DataTrigger>
-                                        <DataTrigger Property="Runner.State"
-                                                     Value="Paused">
-                                            <PropertySetter Property="Content"
-                                                            Value="{StaticResource UnpauseIcon}" />
-                                            <PropertySetter Property="(ToolTip.Tip)"
-                                                            Value="Continue" />
+                                        <DataTrigger Property="Runner.State" Value="Paused">
+                                            <PropertySetter Property="Content" Value="{StaticResource UnpauseIcon}" />
+                                            <PropertySetter Property="(ToolTip.Tip)" Value="Continue" />
                                         </DataTrigger>
                                     </BehaviorCollection>
                                 </BehaviorCollectionTemplate>
@@ -281,25 +281,19 @@
                     </Button.Theme>
                 </Button>
 
-                <Button Command="{Binding RunCommand}"
-                        Theme="{StaticResource IconButton}">
+                <Button Command="{Binding RunCommand}" Theme="{StaticResource IconButton}">
                     <StackPanel Orientation="Horizontal">
-                        <ContentControl Margin="0 0 4 0">
+                        <ContentControl Margin="0,0,4,0">
                             <ContentControl.Theme>
                                 <ControlTheme TargetType="{x:Type ContentControl}">
-                                    <Setter Property="Content"
-                                            Value="{StaticResource StopIcon}" />
-                                    <Setter Property="(ToolTip.Tip)"
-                                            Value="Stop" />
+                                    <Setter Property="Content" Value="{StaticResource StopIcon}" />
+                                    <Setter Property="(ToolTip.Tip)" Value="Stop" />
                                     <Setter Property="(Interaction.Behaviors)">
                                         <BehaviorCollectionTemplate>
                                             <BehaviorCollection>
-                                                <DataTrigger Property="Runner.State"
-                                                             Value="Stopped">
-                                                    <PropertySetter Property="Content"
-                                                                    Value="{StaticResource RunIcon}" />
-                                                    <PropertySetter Property="(ToolTip.Tip)"
-                                                                    Value="Run" />
+                                                <DataTrigger Property="Runner.State" Value="Stopped">
+                                                    <PropertySetter Property="Content" Value="{StaticResource RunIcon}" />
+                                                    <PropertySetter Property="(ToolTip.Tip)" Value="Run" />
                                                 </DataTrigger>
                                             </BehaviorCollection>
                                         </BehaviorCollectionTemplate>
@@ -313,46 +307,48 @@
 
                 <Separator Width="1" Height="20" />
 
-                <WpfBtn Content="{StaticResource ZoomInIcon}"
-                        Command="{x:Static nodify:EditorCommands.ZoomIn}"
-                        CommandTarget="{Binding ElementName=Editor}"
-                        ToolTip.Tip="Zoom In"
-                        Theme="{StaticResource IconButton}" />
+                <WpfBtn
+                    Command="{x:Static nodify:EditorCommands.ZoomIn}"
+                    CommandTarget="{Binding ElementName=Editor}"
+                    Content="{StaticResource ZoomInIcon}"
+                    Theme="{StaticResource IconButton}"
+                    ToolTip.Tip="Zoom In" />
 
-                <WpfBtn Content="{StaticResource ZoomOutIcon}"
-                        Command="{x:Static nodify:EditorCommands.ZoomOut}"
-                        CommandTarget="{Binding ElementName=Editor}"
-                        ToolTip.Tip="Zoom Out"
-                        Theme="{StaticResource IconButton}" />
+                <WpfBtn
+                    Command="{x:Static nodify:EditorCommands.ZoomOut}"
+                    CommandTarget="{Binding ElementName=Editor}"
+                    Content="{StaticResource ZoomOutIcon}"
+                    Theme="{StaticResource IconButton}"
+                    ToolTip.Tip="Zoom Out" />
 
-                <Button Theme="{StaticResource IconButton}"
-                        Content="{StaticResource ThemeIcon}"
-                        Command="{Binding Source={x:Static shared:ThemeManager.SetNextThemeCommand}}"
-                        ToolTip.Tip="Change theme" />
+                <Button
+                    Command="{Binding Source={x:Static shared:ThemeManager.SetNextThemeCommand}}"
+                    Content="{StaticResource ThemeIcon}"
+                    Theme="{StaticResource IconButton}"
+                    ToolTip.Tip="Change theme" />
             </StackPanel>
         </Border>
 
-        <!--Settings-->
-        <Expander HorizontalContentAlignment="Left"
-                  VerticalContentAlignment="Center"
-                  HorizontalAlignment="Left"
-                  Background="{DynamicResource PanelBackgroundBrush}"
-                  Padding="0 1 4 3"
-                  IsExpanded="True"
-                  ExpandDirection="Left">
+        <!--  Settings  -->
+        <Expander
+            Padding="0,1,4,3"
+            HorizontalAlignment="Left"
+            HorizontalContentAlignment="Left"
+            VerticalContentAlignment="Center"
+            Background="{DynamicResource PanelBackgroundBrush}"
+            ExpandDirection="Left"
+            IsExpanded="True">
             <Expander.Theme>
-                <ControlTheme TargetType="{x:Type Expander}"
-                       BasedOn="{StaticResource {x:Type Expander}}">
-                    <Setter Property="Tag"
-                            Value="{StaticResource ExpandRightIcon}" />
+                <ControlTheme BasedOn="{StaticResource {x:Type Expander}}" TargetType="{x:Type Expander}">
+                    <Setter Property="Tag" Value="{StaticResource ExpandRightIcon}" />
                     <Setter Property="(Interaction.Behaviors)">
                         <BehaviorCollectionTemplate>
                             <BehaviorCollection>
-                                <DataTrigger Property="IsExpanded"
-                                             UseDataContext="False"
-                                             Value="True">
-                                    <PropertySetter Property="Tag"
-                                                    Value="{StaticResource ExpandLeftIcon}" />
+                                <DataTrigger
+                                    UseDataContext="False"
+                                    Property="IsExpanded"
+                                    Value="True">
+                                    <PropertySetter Property="Tag" Value="{StaticResource ExpandLeftIcon}" />
                                 </DataTrigger>
                             </BehaviorCollection>
                         </BehaviorCollectionTemplate>
@@ -360,21 +356,23 @@
                 </ControlTheme>
             </Expander.Theme>
 
-            <Border BorderBrush="{DynamicResource BackgroundBrush}"
-                    BorderThickness="1"
-                    Width="350"
-                    Padding="10"
-                    HorizontalAlignment="Stretch">
+            <Border
+                Width="350"
+                Padding="10"
+                HorizontalAlignment="Stretch"
+                BorderBrush="{DynamicResource BackgroundBrush}"
+                BorderThickness="1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="2*" />
                     </Grid.RowDefinitions>
 
-                    <!--TRANSITIONS-->
-                    <ScrollViewer IsVisible="{Binding SelectedState, Converter={shared:BooleanToVisibilityConverter Negate=True}}"
-                                  VerticalScrollBarVisibility="Auto"
-                                  Grid.Row="1">
+                    <!--  TRANSITIONS  -->
+                    <ScrollViewer
+                        Grid.Row="1"
+                        IsVisible="{Binding SelectedState, Converter={shared:BooleanToVisibilityConverter Negate=True}}"
+                        VerticalScrollBarVisibility="Auto">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -382,36 +380,36 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="Transitions"
-                                       Foreground="{DynamicResource ForegroundBrush}"
-                                       FontWeight="Bold"
-                                       FontSize="16" />
+                            <TextBlock
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource ForegroundBrush}"
+                                Text="Transitions" />
 
-                            <Separator Height="2"
-                                       Margin="0 2 0 5"
-                                       Grid.Row="1" />
+                            <Separator
+                                Grid.Row="1"
+                                Height="2"
+                                Margin="0,2,0,5" />
 
-                            <ItemsControl ItemsSource="{Binding Transitions}"
-                                          Grid.Row="2">
+                            <ItemsControl Grid.Row="2" ItemsSource="{Binding Transitions}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate DataType="{x:Type local:TransitionViewModel}">
-                                        <Expander BorderThickness="0 0 0 1"
-                                                  Padding="0 5 0 0"
-                                                  IsExpanded="True"
-                                                  BorderBrush="{DynamicResource BackgroundBrush}">
+                                        <Expander
+                                            Padding="0,5,0,0"
+                                            BorderBrush="{DynamicResource BackgroundBrush}"
+                                            BorderThickness="0,0,0,1"
+                                            IsExpanded="True">
                                             <Expander.Theme>
-                                                <ControlTheme TargetType="{x:Type Expander}"
-                                                       BasedOn="{StaticResource {x:Type Expander}}">
-                                                    <Setter Property="Tag"
-                                                            Value="{StaticResource ExpandRightIcon}" />
+                                                <ControlTheme BasedOn="{StaticResource {x:Type Expander}}" TargetType="{x:Type Expander}">
+                                                    <Setter Property="Tag" Value="{StaticResource ExpandRightIcon}" />
                                                     <Setter Property="(Interaction.Behaviors)">
                                                         <BehaviorCollectionTemplate>
                                                             <BehaviorCollection>
-                                                                <DataTrigger Property="IsExpanded"
-                                                                             UseDataContext="False"
-                                                                             Value="True">
-                                                                    <PropertySetter Property="Tag"
-                                                                        Value="{StaticResource ExpandDownIcon}" />
+                                                                <DataTrigger
+                                                                    UseDataContext="False"
+                                                                    Property="IsExpanded"
+                                                                    Value="True">
+                                                                    <PropertySetter Property="Tag" Value="{StaticResource ExpandDownIcon}" />
                                                                 </DataTrigger>
                                                             </BehaviorCollection>
                                                         </BehaviorCollectionTemplate>
@@ -422,15 +420,12 @@
                                                 <TextBlock>
                                                     <TextBlock.Theme>
                                                         <ControlTheme TargetType="{x:Type TextBlock}">
-                                                            <Setter Property="Foreground"
-                                                                    Value="{DynamicResource ForegroundBrush}" />
+                                                            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
                                                             <Setter Property="(Interaction.Behaviors)">
                                                                 <BehaviorCollectionTemplate>
                                                                     <BehaviorCollection>
-                                                                        <DataTrigger Property="IsActive"
-                                                                                     Value="True">
-                                                                            <PropertySetter Property="Foreground"
-                                                                                            Value="{DynamicResource ActiveStateBrush}" />
+                                                                        <DataTrigger Property="IsActive" Value="True">
+                                                                            <PropertySetter Property="Foreground" Value="{DynamicResource ActiveStateBrush}" />
                                                                         </DataTrigger>
                                                                     </BehaviorCollection>
                                                                 </BehaviorCollectionTemplate>
@@ -446,8 +441,7 @@
                                             <Border HorizontalAlignment="Stretch">
                                                 <Grid IsSharedSizeScope="True">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"
-                                                                          SharedSizeGroup="ConditionName" />
+                                                        <ColumnDefinition Width="Auto" SharedSizeGroup="ConditionName" />
                                                         <ColumnDefinition />
                                                     </Grid.ColumnDefinitions>
 
@@ -457,28 +451,30 @@
                                                         <RowDefinition Height="Auto" />
                                                     </Grid.RowDefinitions>
 
-                                                    <!--CONDITION-->
-                                                    <TextBlock Text="Condition"
-                                                               Margin="0 0 10 0"
-                                                               VerticalAlignment="Center" />
+                                                    <!--  CONDITION  -->
+                                                    <TextBlock
+                                                        Margin="0,0,10,0"
+                                                        VerticalAlignment="Center"
+                                                        Text="Condition" />
 
-                                                    <ComboBox ItemsSource="{Binding DataContext.Blackboard.Conditions, Source={StaticResource EditorProxy}}"
-                                                              SelectedItem="{Binding ConditionReference}"
-                                                              DisplayMemberBinding="{Binding Name}"
-                                                              Grid.Column="1" />
+                                                    <ComboBox
+                                                        Grid.Column="1"
+                                                        DisplayMemberBinding="{Binding Name}"
+                                                        ItemsSource="{Binding DataContext.Blackboard.Conditions, Source={StaticResource EditorProxy}}"
+                                                        SelectedItem="{Binding ConditionReference}" />
 
-                                                    <!--INPUT-->
-                                                    <ItemsControl ItemsSource="{Binding Condition.Input}"
-                                                                  Padding="0 5 0 0"
-                                                                  Grid.Row="1"
-                                                                  Grid.ColumnSpan="2">
+                                                    <!--  INPUT  -->
+                                                    <ItemsControl
+                                                        Grid.Row="1"
+                                                        Grid.ColumnSpan="2"
+                                                        Padding="0,5,0,0"
+                                                        ItemsSource="{Binding Condition.Input}">
                                                         <ItemsControl.ItemTemplate>
                                                             <DataTemplate DataType="{x:Type local:BlackboardKeyViewModel}">
-                                                                <local:BlackboardKeyEditorView Margin="0 0 0 2">
+                                                                <local:BlackboardKeyEditorView Margin="0,0,0,2">
                                                                     <local:BlackboardKeyEditorView.DataContext>
                                                                         <MultiBinding Converter="{local:BlackboardKeyEditorConverter CanChangeInputType=True}">
-                                                                            <Binding Source="{StaticResource BlackboardProxy}"
-                                                                                     Path="DataContext.Keys" />
+                                                                            <Binding Path="DataContext.Keys" Source="{StaticResource BlackboardProxy}" />
                                                                             <Binding Path="DataContext" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}" />
                                                                         </MultiBinding>
                                                                     </local:BlackboardKeyEditorView.DataContext>
@@ -487,37 +483,33 @@
                                                         </ItemsControl.ItemTemplate>
                                                     </ItemsControl>
 
-                                                    <Grid Grid.Row="2"
-                                                          Grid.ColumnSpan="2">
+                                                    <Grid Grid.Row="2" Grid.ColumnSpan="2">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition />
                                                             <ColumnDefinition />
                                                         </Grid.ColumnDefinitions>
 
                                                         <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="From: "
-                                                                       VerticalAlignment="Center" />
-                                                            <WpfBtn Theme="{StaticResource IconButton}"
-                                                                    Command="{x:Static nodify:EditorCommands.BringIntoView}"
-                                                                    CommandParameter="{Binding Source.Location}"
-                                                                    CommandTarget="{Binding ElementName=Editor}"
-                                                                    Foreground="DodgerBlue">
-                                                                <TextBlock Text="{Binding Source.Name}"
-                                                                           TextDecorations="Underline" />
+                                                            <TextBlock VerticalAlignment="Center" Text="From: " />
+                                                            <WpfBtn
+                                                                Command="{x:Static nodify:EditorCommands.BringIntoView}"
+                                                                CommandParameter="{Binding Source.Location}"
+                                                                CommandTarget="{Binding ElementName=Editor}"
+                                                                Foreground="DodgerBlue"
+                                                                Theme="{StaticResource IconButton}">
+                                                                <TextBlock Text="{Binding Source.Name}" TextDecorations="Underline" />
                                                             </WpfBtn>
                                                         </StackPanel>
 
-                                                        <StackPanel Orientation="Horizontal"
-                                                                    Grid.Column="1">
-                                                            <TextBlock Text="To: "
-                                                                       VerticalAlignment="Center" />
-                                                            <WpfBtn Theme="{StaticResource IconButton}"
-                                                                    Command="{x:Static nodify:EditorCommands.BringIntoView}"
-                                                                    CommandParameter="{Binding Target.Location}"
-                                                                    CommandTarget="{Binding ElementName=Editor}"
-                                                                    Foreground="DodgerBlue">
-                                                                <TextBlock Text="{Binding Target.Name}"
-                                                                           TextDecorations="Underline" />
+                                                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                            <TextBlock VerticalAlignment="Center" Text="To: " />
+                                                            <WpfBtn
+                                                                Command="{x:Static nodify:EditorCommands.BringIntoView}"
+                                                                CommandParameter="{Binding Target.Location}"
+                                                                CommandTarget="{Binding ElementName=Editor}"
+                                                                Foreground="DodgerBlue"
+                                                                Theme="{StaticResource IconButton}">
+                                                                <TextBlock Text="{Binding Target.Name}" TextDecorations="Underline" />
                                                             </WpfBtn>
                                                         </StackPanel>
                                                     </Grid>
@@ -530,42 +522,45 @@
                         </Grid>
                     </ScrollViewer>
 
-                    <!--STATES-->
-                    <Grid IsVisible="{Binding SelectedState, Converter={x:Static ObjectConverters.IsNotNull}}"
-                          Grid.Row="1">
+                    <!--  STATES  -->
+                    <Grid Grid.Row="1" IsVisible="{Binding SelectedState, Converter={x:Static ObjectConverters.IsNotNull}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <!--STATE NAME-->
+                        <!--  STATE NAME  -->
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <shared:EditableTextBlock Text="{Binding SelectedState.Name}"
-                                                      IsEditing="{Binding IsChecked, ElementName=EditStateName}"
-                                                      IsEditable="{Binding SelectedState.IsEditable}"
-                                                      Foreground="{DynamicResource ForegroundBrush}"
-                                                      FontWeight="Bold"
-                                                      FontSize="16"
-                                                      MaxLength="20" />
-                            <CheckBox x:Name="EditStateName"
-                                      IsVisible="{Binding SelectedState.IsEditable}"
-                                      Content="{StaticResource EditIcon}"
-                                      Theme="{StaticResource IconCheckBox}"
-                                      Grid.Column="1" />
+                            <shared:EditableTextBlock
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource ForegroundBrush}"
+                                IsEditable="{Binding SelectedState.IsEditable}"
+                                IsEditing="{Binding IsChecked, ElementName=EditStateName}"
+                                MaxLength="20"
+                                Text="{Binding SelectedState.Name}" />
+                            <CheckBox
+                                x:Name="EditStateName"
+                                Grid.Column="1"
+                                Content="{StaticResource EditIcon}"
+                                IsVisible="{Binding SelectedState.IsEditable}"
+                                Theme="{StaticResource IconCheckBox}" />
                         </Grid>
 
-                        <Separator Height="2"
-                                   Margin="0 2 0 10"
-                                   Grid.Row="1" />
+                        <Separator
+                            Grid.Row="1"
+                            Height="2"
+                            Margin="0,2,0,10" />
 
-                        <ScrollViewer IsVisible="{Binding SelectedState.Action}"
-                                      VerticalScrollBarVisibility="Auto"
-                                      Grid.Row="2">
+                        <ScrollViewer
+                            Grid.Row="2"
+                            IsVisible="{Binding SelectedState.Action}"
+                            VerticalScrollBarVisibility="Auto">
                             <Grid IsSharedSizeScope="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -577,38 +572,42 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <!--ACTION-->
-                                <TextBlock Text="Action"
-                                           Margin="0 0 10 0"
-                                           VerticalAlignment="Center" />
-                                <ComboBox ItemsSource="{Binding Blackboard.Actions}"
-                                          SelectedItem="{Binding SelectedState.ActionReference}"
-                                          IsEnabled="{Binding SelectedState.IsEditable}"
-                                          DisplayMemberBinding="{Binding Name}"
-                                          Grid.Column="1" />
+                                <!--  ACTION  -->
+                                <TextBlock
+                                    Margin="0,0,10,0"
+                                    VerticalAlignment="Center"
+                                    Text="Action" />
+                                <ComboBox
+                                    Grid.Column="1"
+                                    DisplayMemberBinding="{Binding Name}"
+                                    IsEnabled="{Binding SelectedState.IsEditable}"
+                                    ItemsSource="{Binding Blackboard.Actions}"
+                                    SelectedItem="{Binding SelectedState.ActionReference}" />
 
-                                <!--INPUT-->
-                                <Expander Margin="0 5 0 0"
-                                          Padding="0 5 0 0"
-                                          Grid.Row="1"
-                                          Grid.ColumnSpan="2"
-                                          BorderThickness="0 0 0 1"
-                                          Header="Input"
-                                          FontWeight="Bold"
-                                          IsExpanded="True"
-                                          BorderBrush="{DynamicResource BackgroundBrush}"
-                                          VerticalAlignment="Stretch"
-                                          VerticalContentAlignment="Stretch"
-                                          IsVisible="{Binding SelectedState.Action.Input.Count, Converter={shared:BooleanToVisibilityConverter}}">
+                                <!--  INPUT  -->
+                                <Expander
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0,5,0,0"
+                                    Padding="0,5,0,0"
+                                    VerticalAlignment="Stretch"
+                                    VerticalContentAlignment="Stretch"
+                                    BorderBrush="{DynamicResource BackgroundBrush}"
+                                    BorderThickness="0,0,0,1"
+                                    FontWeight="Bold"
+                                    Header="Input"
+                                    IsExpanded="True"
+                                    IsVisible="{Binding SelectedState.Action.Input.Count, Converter={shared:BooleanToVisibilityConverter}}">
                                     <Expander.Theme>
-                                        <ControlTheme TargetType="{x:Type Expander}"
-                                               BasedOn="{StaticResource {x:Type Expander}}">
-                                            <Setter Property="Tag"
-                                                    Value="{StaticResource ExpandRightIcon}" />
+                                        <ControlTheme BasedOn="{StaticResource {x:Type Expander}}" TargetType="{x:Type Expander}">
+                                            <Setter Property="Tag" Value="{StaticResource ExpandRightIcon}" />
                                             <Setter Property="(Interaction.Behaviors)">
                                                 <BehaviorCollectionTemplate>
                                                     <BehaviorCollection>
-                                                        <DataTrigger Property="IsExpanded" UseDataContext="False" Value="True">
+                                                        <DataTrigger
+                                                            UseDataContext="False"
+                                                            Property="IsExpanded"
+                                                            Value="True">
                                                             <PropertySetter Property="Tag" Value="{StaticResource ExpandDownIcon}" />
                                                         </DataTrigger>
                                                     </BehaviorCollection>
@@ -616,16 +615,15 @@
                                             </Setter>
                                         </ControlTheme>
                                     </Expander.Theme>
-                                    <ItemsControl ItemsSource="{Binding SelectedState.Action.Input}"
-                                                  FontWeight="Normal">
+                                    <ItemsControl FontWeight="Normal" ItemsSource="{Binding SelectedState.Action.Input}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="{x:Type local:BlackboardKeyViewModel}">
-                                                <local:BlackboardKeyEditorView Margin="0 0 0 2">
+                                                <local:BlackboardKeyEditorView Margin="0,0,0,2">
                                                     <local:BlackboardKeyEditorView.DataContext>
                                                         <MultiBinding Converter="{local:BlackboardKeyEditorConverter CanChangeInputType=True}">
-                                                            <Binding Source="{StaticResource BlackboardProxy}"
-                                                                     Path="DataContext.Keys" />
-                                                            <Binding Path="DataContext" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}" /> <!-- BindsDirectlyToSource="True" -->
+                                                            <Binding Path="DataContext.Keys" Source="{StaticResource BlackboardProxy}" />
+                                                            <Binding Path="DataContext" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}" /> 
+                                                            <!--  BindsDirectlyToSource="True"  -->
                                                         </MultiBinding>
                                                     </local:BlackboardKeyEditorView.DataContext>
                                                 </local:BlackboardKeyEditorView>
@@ -634,26 +632,28 @@
                                     </ItemsControl>
                                 </Expander>
 
-                                <!--OUTPUT-->
-                                <Expander Margin="0 5 0 0"
-                                          Padding="0 5 0 0"
-                                          Grid.Row="2"
-                                          Grid.ColumnSpan="2"
-                                          Header="Output"
-                                          FontWeight="Bold"
-                                          BorderThickness="0 0 0 1"
-                                          IsExpanded="True"
-                                          BorderBrush="{DynamicResource BackgroundBrush}"
-                                          IsVisible="{Binding SelectedState.Action.Output.Count, Converter={shared:BooleanToVisibilityConverter}}">
+                                <!--  OUTPUT  -->
+                                <Expander
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0,5,0,0"
+                                    Padding="0,5,0,0"
+                                    BorderBrush="{DynamicResource BackgroundBrush}"
+                                    BorderThickness="0,0,0,1"
+                                    FontWeight="Bold"
+                                    Header="Output"
+                                    IsExpanded="True"
+                                    IsVisible="{Binding SelectedState.Action.Output.Count, Converter={shared:BooleanToVisibilityConverter}}">
                                     <Expander.Theme>
-                                        <ControlTheme TargetType="{x:Type Expander}"
-                                               BasedOn="{StaticResource {x:Type Expander}}">
-                                            <Setter Property="Tag"
-                                                    Value="{StaticResource ExpandRightIcon}" />
+                                        <ControlTheme BasedOn="{StaticResource {x:Type Expander}}" TargetType="{x:Type Expander}">
+                                            <Setter Property="Tag" Value="{StaticResource ExpandRightIcon}" />
                                             <Setter Property="(Interaction.Behaviors)">
                                                 <BehaviorCollectionTemplate>
                                                     <BehaviorCollection>
-                                                        <DataTrigger Property="IsExpanded" UseDataContext="False" Value="True">
+                                                        <DataTrigger
+                                                            UseDataContext="False"
+                                                            Property="IsExpanded"
+                                                            Value="True">
                                                             <PropertySetter Property="Tag" Value="{StaticResource ExpandDownIcon}" />
                                                         </DataTrigger>
                                                     </BehaviorCollection>
@@ -661,16 +661,15 @@
                                             </Setter>
                                         </ControlTheme>
                                     </Expander.Theme>
-                                    <ItemsControl ItemsSource="{Binding SelectedState.Action.Output}"
-                                                  FontWeight="Normal">
+                                    <ItemsControl FontWeight="Normal" ItemsSource="{Binding SelectedState.Action.Output}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="{x:Type local:BlackboardKeyViewModel}">
-                                                <local:BlackboardKeyEditorView Margin="0 0 0 2">
+                                                <local:BlackboardKeyEditorView Margin="0,0,0,2">
                                                     <local:BlackboardKeyEditorView.DataContext>
                                                         <MultiBinding Converter="{local:BlackboardKeyEditorConverter CanChangeInputType=False}">
-                                                            <Binding Source="{StaticResource BlackboardProxy}"
-                                                                     Path="DataContext.Keys" />
-                                                            <Binding Path="DataContext" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}" /> <!-- BindsDirectlyToSource="True" -->
+                                                            <Binding Path="DataContext.Keys" Source="{StaticResource BlackboardProxy}" />
+                                                            <Binding Path="DataContext" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}" /> 
+                                                            <!--  BindsDirectlyToSource="True"  -->
                                                         </MultiBinding>
                                                     </local:BlackboardKeyEditorView.DataContext>
                                                 </local:BlackboardKeyEditorView>
@@ -682,7 +681,7 @@
                         </ScrollViewer>
                     </Grid>
 
-                    <!--BLACKBOARD-->
+                    <!--  BLACKBOARD  -->
                     <Grid IsSharedSizeScope="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -695,37 +694,41 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <shared:EditableTextBlock Text="{Binding Name}"
-                                                      IsEditing="{Binding IsChecked, ElementName=EditName}"
-                                                      Foreground="{DynamicResource ForegroundBrush}"
-                                                      FontWeight="Bold"
-                                                      FontSize="16"
-                                                      MaxLength="20" />
+                            <shared:EditableTextBlock
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource ForegroundBrush}"
+                                IsEditing="{Binding IsChecked, ElementName=EditName}"
+                                MaxLength="20"
+                                Text="{Binding Name}" />
 
-                            <StackPanel Orientation="Horizontal"
-                                        Grid.Column="1">
-                                <CheckBox x:Name="EditName"
-                                          Content="{StaticResource EditIcon}"
-                                          ToolTip.Tip="Edit Name"
-                                          Theme="{StaticResource IconCheckBox}" />
-                                <Button Content="{StaticResource AddKeyIcon}"
-                                        Command="{Binding Blackboard.AddKeyCommand}"
-                                        ToolTip.Tip="Add New Key"
-                                        Theme="{StaticResource IconButton}" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <CheckBox
+                                    x:Name="EditName"
+                                    Content="{StaticResource EditIcon}"
+                                    Theme="{StaticResource IconCheckBox}"
+                                    ToolTip.Tip="Edit Name" />
+                                <Button
+                                    Command="{Binding Blackboard.AddKeyCommand}"
+                                    Content="{StaticResource AddKeyIcon}"
+                                    Theme="{StaticResource IconButton}"
+                                    ToolTip.Tip="Add New Key" />
                             </StackPanel>
                         </Grid>
 
-                        <Separator Height="2"
-                                   Margin="0 2 0 10"
-                                   Grid.Row="1" />
+                        <Separator
+                            Grid.Row="1"
+                            Height="2"
+                            Margin="0,2,0,10" />
 
-                        <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                      HorizontalScrollBarVisibility="Auto"
-                                      Grid.Row="2">
+                        <ScrollViewer
+                            Grid.Row="2"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Blackboard.Keys}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate DataType="{x:Type local:BlackboardKeyViewModel}">
-                                        <Grid Margin="0 0 0 2">
+                                        <Grid Margin="0,0,0,2">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition />
                                                 <ColumnDefinition SharedSizeGroup="Actions" />
@@ -734,25 +737,25 @@
                                             <local:BlackboardKeyEditorView>
                                                 <local:BlackboardKeyEditorView.DataContext>
                                                     <MultiBinding Converter="{local:BlackboardKeyEditorConverter CanChangeInputType=False}">
-                                                        <Binding Source="{StaticResource BlackboardProxy}"
-                                                                 Path="DataContext.Keys" />
-                                                        <Binding Path="DataContext" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}" /> <!-- BindsDirectlyToSource="True" -->
-                                                        <Binding ElementName="EditKeyName"
-                                                                 Path="IsChecked" />
+                                                        <Binding Path="DataContext.Keys" Source="{StaticResource BlackboardProxy}" />
+                                                        <Binding Path="DataContext" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}" /> 
+                                                        <!--  BindsDirectlyToSource="True"  -->
+                                                        <Binding ElementName="EditKeyName" Path="IsChecked" />
                                                     </MultiBinding>
                                                 </local:BlackboardKeyEditorView.DataContext>
                                             </local:BlackboardKeyEditorView>
 
-                                            <StackPanel Orientation="Horizontal"
-                                                        Grid.Column="3">
-                                                <CheckBox x:Name="EditKeyName"
-                                                          Content="{StaticResource EditIcon}"
-                                                          ToolTip.Tip="Edit Name"
-                                                          Theme="{StaticResource IconCheckBox}" />
-                                                <Button Content="{StaticResource RemoveKeyIcon}"
-                                                        Command="{Binding DataContext.Blackboard.RemoveKeyCommand, Source={StaticResource EditorProxy}}"
-                                                        CommandParameter="{Binding}"
-                                                        Theme="{StaticResource IconButton}" />
+                                            <StackPanel Grid.Column="3" Orientation="Horizontal">
+                                                <CheckBox
+                                                    x:Name="EditKeyName"
+                                                    Content="{StaticResource EditIcon}"
+                                                    Theme="{StaticResource IconCheckBox}"
+                                                    ToolTip.Tip="Edit Name" />
+                                                <Button
+                                                    Command="{Binding DataContext.Blackboard.RemoveKeyCommand, Source={StaticResource EditorProxy}}"
+                                                    CommandParameter="{Binding}"
+                                                    Content="{StaticResource RemoveKeyIcon}"
+                                                    Theme="{StaticResource IconButton}" />
                                             </StackPanel>
                                         </Grid>
                                     </DataTemplate>

@@ -27,7 +27,7 @@ namespace Nodify
     [DefaultProperty(nameof(Decorators))]
     public partial class NodifyEditor : MultiSelector
     {
-        protected const string ElementItemsHost = "PART_ItemsHost";
+        protected const string ElementItemsHost = "PART_ItemsHost";  
         protected const string ElementConnectionsHost = "PART_ConnectionsHost";
 
         #region Viewport

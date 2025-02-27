@@ -17,13 +17,13 @@
     <PackageTags>wpf mvvm node-editor controls</PackageTags>
     <Version>6.5.0</Version>
     <PackageReleaseNotes>
-      > - Features:
-      >	  - Added SelectedConnection, SelectedConnections, CanSelectMultipleConnections and CanSelectMultipleItems dependency properties to NodifyEditor
-      >	  - Added IsSelected and IsSelectable attached dependency properties to BaseConnection
-      >	  - Added PrioritizeBaseConnectionForSelection static field to BaseConnection
-      >	  - Added EditorGestures.Connection.Selection
-      >	  - Added support for ScrollViewer in NodifyEditor (implements IScrollInfo)
-      >	  - Added NodifyEditor.ScrollIncrement dependency property
+      &gt; - Features:
+      &gt;	  - Added SelectedConnection, SelectedConnections, CanSelectMultipleConnections and CanSelectMultipleItems dependency properties to NodifyEditor
+      &gt;	  - Added IsSelected and IsSelectable attached dependency properties to BaseConnection
+      &gt;	  - Added PrioritizeBaseConnectionForSelection static field to BaseConnection
+      &gt;	  - Added EditorGestures.Connection.Selection
+      &gt;	  - Added support for ScrollViewer in NodifyEditor (implements IScrollInfo)
+      &gt;	  - Added NodifyEditor.ScrollIncrement dependency property
     </PackageReleaseNotes>
     <AssemblyOriginatorKeyFile>..\build\Nodify.snk</AssemblyOriginatorKeyFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -49,13 +49,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Themes\*.xaml" />
     <AvaloniaResource Include="Themes\*.xaml" />
     <None Remove="Themes\Styles\*.xaml" />
     <AvaloniaResource Include="Themes\Styles\*.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.1.0" />
   </ItemGroup>
   
 </Project>

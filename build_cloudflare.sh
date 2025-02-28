@@ -6,5 +6,5 @@ chmod +x dotnet-install.sh
 ./dotnet/dotnet --version
 ./dotnet/dotnet workload restore
 ./dotnet/dotnet restore
-./dotnet/dotnet publish Examples/Nodify.Shapes.Web -c Release -o output
+#./dotnet/dotnet publish Examples/Nodify.Shapes.Web -c Release -o output
 #find AppBundle/ -type f -exec brotli {} \;
